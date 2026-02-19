@@ -44,6 +44,14 @@ const connect = async () => {
 
         } else if (choice === '2') {
             // View all customers
+            const customers = await Customer.find({}); // find all customers with no filters
+            if (customers.length === 0) {
+                console.log('No customers found.');
+            } else {
+                customers.forEach(customer => {
+                    console.log(`Customer Name: ${customer.name}, Age: ${customer.age}, ID: ${customer._id}`);
+                });
+            }
         } else if (choice === '3') {
             // Update a customer
         } else if (choice === '4') {
