@@ -56,7 +56,7 @@ const connect = async () => {
             // Update a customer
             const customersToUpdate = await Customer.find({});
             customersToUpdate.forEach((customer, index) => {
-                // add a counter to the left of the customer name to make it easier for the user to select which customer to update
+                // counter to the left: easier for user to select which customer to update
                 console.log(`${index + 1}. Customer Name: ${customer.name}, Age: ${customer.age}, ID: ${customer._id}`);
             });
             const customerIndex = prompt('Enter the number of the customer you want to update: ');
@@ -73,6 +73,15 @@ const connect = async () => {
             }
         } else if (choice === '4') {
             // Delete a customer
+            const customersToDelete = await Customer.find({});
+            customersToDelete.forEach((customer, index) => {
+                // counter to the left: easier for user to select which customer to delete
+                console.log(`${index + 1}. Customer Name: ${customer.name}, Age: ${customer.age}, ID: ${customer._id}`);
+            });
+            const customerIndexToDelete = prompt('Enter the number of the customer you want to delete: ');
+            const customerToDelete = customersToDelete[customerIndexToDelete - 1];
+            await Customer.findByIdAndDelete(customerToDelete._id);
+            console.log(`Customer ${customerToDelete.name} has been deleted.`);
         } else if (choice === '5') { // stop the loop and exit the app
             running = false;
             console.log('Goodbye! And see you next time!');
