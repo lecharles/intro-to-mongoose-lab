@@ -54,11 +54,28 @@ const connect = async () => {
             }
         } else if (choice === '3') {
             // Update a customer
+            const customersToUpdate = await Customer.find({});
+            customersToUpdate.forEach((customer, index) => {
+                // add a counter to the left of the customer name to make it easier for the user to select which customer to update
+                console.log(`${index + 1}. Customer Name: ${customer.name}, Age: ${customer.age}, ID: ${customer._id}`);
+            });
+            const customerIndex = prompt('Enter the number of the customer you want to update: ');
+            const newName = prompt('What is the customers new name? ');
+            const newAge = prompt('What is the customers new age? ');
+            const customerToUpdate = customersToUpdate[customerIndex - 1]; // -1 because the index starts at 0 but the user sees it starting at 1
+            if (customerToUpdate) {
+                customerToUpdate.name = newName;
+                customerToUpdate.age = newAge;
+                await customerToUpdate.save();
+                console.log(`Customer updated! Name: ${customerToUpdate.name}, Age: ${customerToUpdate.age}, ID: ${customerToUpdate._id}`);
+            } else {
+                console.log('Invalid customer selection.');
+            }
         } else if (choice === '4') {
             // Delete a customer
         } else if (choice === '5') { // stop the loop and exit the app
             running = false;
-            console.log('Goodbye!');
+            console.log('Goodbye! And see you next time!');
         } else {
             console.log('Invalid choice, please try again.'); // otherwise it's something else that's not a valid option
         }
