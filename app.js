@@ -36,6 +36,12 @@ const connect = async () => {
 
         if (choice === '1') {
             // Create a new customer
+            const name = prompt('Whats the customer name? ');
+            const age = prompt('And customer age? ');
+            const customer = await Customer.create({ name, age });
+            console.log(`New Customer ${customer.name} created, is ${customer.age} years old. And in our records under ${customer._id} ID.`, customer);
+            // ⬆️ want to see the full customer object so logging the whole thing too
+
         } else if (choice === '2') {
             // View all customers
         } else if (choice === '3') {
